@@ -16,10 +16,6 @@ bacterial_mod.modpath = minetest.get_modpath("bacterial_mod")
 bacterial_mod.music = bacterial_mod.music or {}
 bacterial_mod.music.modpath = bacterial_mod.modpath
 
--- Track time for sleeping detection
-local last_time = minetest.get_timeofday() -- Unused variable?
-
-
 -- Register infected world nodes
 minetest.register_node("bacterial_mod:Infected_Soil", {
     description = "Infected Soil",
@@ -454,7 +450,6 @@ minetest.register_abm({
 
 
 local phases = {
-
 
     {threshold = 250, name = "Phase 1", unlock = function()
         -- Enable faster spread or new infected block types
