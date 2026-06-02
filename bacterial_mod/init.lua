@@ -191,29 +191,6 @@ minetest.register_craftitem("bacterial_mod:flask_sanitizer", {
         return itemstack
     end,
 })
-
-sfinv.register_page("bacterial_mod:hazmat", {
-    title = "Hazmat",
-    get = function(self, player, context)
-        local name = player:get_player_name()
-        local inv = minetest.get_inventory({type="detached", name="hazmat_" .. name})
-        if not inv then
-            init_hazmat_inventory(player)
-        end
-        return sfinv.make_formspec(
-            player, context,
-            "size[8,7]" ..
-            "label[0.2,0.2;Hazmat Gear]" ..
-            "label[0.2,0.7;Suit:]" ..
-            "list[detached:hazmat_" .. name .. ";main;1.3,0.5;1,1;]" ..
-            "list[current_player;main;0,3;8,4;]" ..
-            "listring[detached:hazmat_" .. name .. ";main]" ..
-            "listring[current_player;main]",
-            false
-        )
-    end,
-})
-
 local infected_players = {}
 
 local function init_hazmat_inventory(player)
@@ -256,6 +233,29 @@ local function init_hazmat_inventory(player)
         inv:set_stack("main", 1, ItemStack(saved))
     end
 end
+
+
+sfinv.register_page("bacterial_mod:hazmat", {
+    title = "Hazmat",
+    get = function(self, player, context)
+        local name = player:get_player_name()
+        local inv = minetest.get_inventory({type="detached", name="hazmat_" .. name})
+        if not inv then
+            init_hazmat_inventory(player)
+        end
+        return sfinv.make_formspec(
+            player, context,
+            "size[8,7]" ..
+            "label[0.2,0.2;Hazmat Gear]" ..
+            "label[0.2,0.7;Suit:]" ..
+            "list[detached:hazmat_" .. name .. ";main;1.3,0.5;1,1;]" ..
+            "list[current_player;main;0,3;8,4;]" ..
+            "listring[detached:hazmat_" .. name .. ";main]" ..
+            "listring[current_player;main]",
+            false
+        )
+    end,
+})
 
 minetest.register_on_joinplayer(init_hazmat_inventory)
 
