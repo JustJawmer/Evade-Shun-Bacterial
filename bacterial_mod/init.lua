@@ -453,7 +453,6 @@ minetest.register_abm({
 
 
 
-local evolution_points = tonumber(ep_storage:get_string("evolution_points")) or 0
 local phases = {
 
 
@@ -563,7 +562,7 @@ local function set_current_phase(phase)
     return phase
 end
 
-local current_phase = get_current_phase()
+local current_phase = get_current_phase() -- This is saved, but never accessed?
 
 function check_phase_unlock()
     local evolution_points = tonumber(ep_storage:get_string("evolution_points")) or 0
