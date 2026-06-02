@@ -669,8 +669,8 @@ local infected_nodes = {
     "bacterial_mod:Infected_Rock",
 }
 
+local timer = 0
 minetest.register_globalstep(function(dtime)
-    local timer = 0
     timer = timer + dtime
     if timer < 1 then return end
     timer = 0
