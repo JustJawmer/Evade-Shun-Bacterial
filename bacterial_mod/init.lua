@@ -1,4 +1,4 @@
-USE_SFINV = minetest.get_modpath("sfinv") ~= nil 
+USE_SFINV = minetest.get_modpath("sfinv") ~= nil
 
 local ep_storage = minetest.get_mod_storage()
 
@@ -17,7 +17,7 @@ bacterial_mod.music = bacterial_mod.music or {}
 bacterial_mod.music.modpath = bacterial_mod.modpath
 
 -- Track time for sleeping detection
-local last_time = minetest.get_timeofday()
+local last_time = minetest.get_timeofday() -- Unused variable?
 
 
 -- Register infected world nodes
@@ -276,11 +276,11 @@ minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
         local name = player:get_player_name()
         hazmat_timers[name] = (hazmat_timers[name] or 0) + dtime
-        
+
         -- Check every 5 seconds
         if hazmat_timers[name] >= 5 then
             hazmat_timers[name] = 0
-            
+
             -- Degrade hazmat suit durability
             if is_wearing_hazmat(player) then
                 local inv = minetest.get_inventory({type="detached", name="hazmat_" .. name})
@@ -289,7 +289,7 @@ minetest.register_globalstep(function(dtime)
                     if stack:get_name() == "bacterial_mod:hazmat_suit" then
                         local wear = stack:get_wear()
                         local new_wear = wear + HAZMAT_WEAR_PER_DURABILITY
-                        
+
                         -- Check if suit is completely worn out
                         if new_wear >= HAZMAT_MAX_WEAR then
                             inv:set_stack("main", 1, ItemStack(""))
@@ -394,7 +394,7 @@ minetest.register_globalstep(function(dtime)
     end
 end)
 
-local phase_infection_settings = {
+local phase_infection_settings = { -- Unused variable?
     [0] = {interval = 80, chance = 80},
     [1] = {interval = 70, chance = 70},
     [2] = {interval = 60, chance = 60},
@@ -437,7 +437,7 @@ minetest.register_abm({
                     elseif def.groups.choppy and def.groups.choppy > 0 then
                         target_node = "bacterial_mod:Infected_Log"
                     end
-                    
+
                     if target_node and infected_block_count < max_infected_blocks then
                         minetest.set_node(adj_pos, {name = target_node})
                         infected_block_count = infected_block_count + 1
@@ -470,7 +470,7 @@ local phases = {
 end},
     {threshold = 700, name = "Phase 2", unlock = function()
         -- Spawn infected mobs or unlock new biomes
-        minetest.chat_send_all("Two") 
+        minetest.chat_send_all("Two")
     for _, player in ipairs(minetest.get_connected_players()) do
         minetest.sound_play("Phase_2", {
             to_player = player:get_player_name(),
@@ -545,7 +545,7 @@ end},
         })
     end
 end},
-   
+
 }
 
 local function get_current_phase()
@@ -705,7 +705,7 @@ minetest.register_globalstep(function(dtime)
         local player = minetest.get_player_by_name(name)
         if player then
             local pos = vector.floor(player:get_pos())
-            local node_below = minetest.get_node_or_nil({x=pos.x, y=pos.y - 1, z=pos.z})
+            local node_below = minetest.get_node_or_nil({x=pos.x, y=pos.y - 1, z=pos.z}) -- Unused variable?
         end
 
         if data.stage == "incubation" and data.timer > 5 then
