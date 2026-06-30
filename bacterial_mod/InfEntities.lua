@@ -84,15 +84,16 @@ local function nexus_spawn_mobs_around(pos, name_list, min_count, max_count)
 			y = pos.y + 1,
 			z = pos.z + math.sin(angle) * distance,
 		}
-		local mobname = nexus_random_spawn(name_list)
-		local obj = minetest.add_entity(new_pos, mobname)
-		if obj then
-			local ent = obj:get_luaentity()
-			if ent then
-				ent.spawn_reason = "nexus"
-			end
-		end
-	end
+
+                local mobname = nexus_random_spawn(nexus_stage_1_spawn_mobs)
+                local obj = minetest.add_entity(new_pos, mobname)
+                if obj then
+                    local ent = obj:get_luaentity()
+                    if ent then
+                        ent.spawn_reason = "nexus"
+                    end
+                end
+        end
 end
 
 
