@@ -144,7 +144,7 @@ mobs:register_mob("bacterial_mod:bacteria_blob", {
         punch_start = 189,
         punch_end = 198,
     },
-    on_step = function(self, dtime)
+    do_custom = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -217,7 +217,7 @@ mobs:register_mob("bacterial_mod:infected_cow", {
         die_start = 148,
         die_end = 170,
     },
-    on_step = function(self, dtime)
+    do_custom = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -362,7 +362,7 @@ mobs:register_mob("bacterial_mod:small_flesh_amalgamation", {
         punch_start = 189,
         punch_end = 198,
     },
-    on_step = function(self, dtime)
+    do_custom = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -435,7 +435,7 @@ mobs:register_mob("bacterial_mod:infected_sheep", {
         die_start = 178,
         die_end = 205,
     },
-    on_step = function(self, dtime)
+    do_custom = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -509,7 +509,7 @@ mobs:register_mob("bacterial_mod:infected_pig", {
         die_start = 178,
         die_end = 205,
     },
-    on_step = function(self, dtime)
+    do_custom = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -545,7 +545,7 @@ mobs:register_mob("bacterial_mod:infected_human", {
     collisionbox = {-0.3, -0.01, -0.3, 0.3, 1.8, 0.3},
     visual_size = {x = 1, y = 1},
     visual = "mesh",
-    mesh = "Infected_Human.b3d",
+    mesh = "InfHuman.b3d",
     textures = {
         {"Infected_Human.png"},
     },
@@ -582,7 +582,7 @@ mobs:register_mob("bacterial_mod:infected_human", {
         die_start = 178,
         die_end = 205,
     },
-    on_step = function(self, dtime)
+    do_custom = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -682,7 +682,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
         "bacterial_mod:nexus_stage_2",
         "bacterial_mod:nexus_stage_3",
     },
-    
+
     animation = {
         stand_start = 1,
         stand_end = 80,
@@ -691,7 +691,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
         summon_end = 190,
         speed_summon = 20,
     },
-    
+
     -- Prevent despawning
     static_save = true,
     on_activate = function(self, staticdata)
@@ -704,12 +704,12 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
         -- Set initial animation
         self.object:set_animation({x = self.animation.stand_start, y = self.animation.stand_end}, self.animation.speed_normal, 0)
     end,
-    
+
     get_staticdata = function(self)
         return tostring(self.countdown)
     end,
 
-    on_step = function(self, dtime)
+    do_custom = function(self, dtime)
         -- Prevent any movement
         self.object:set_velocity({x = 0, y = 0, z = 0})
 
@@ -726,10 +726,10 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
             self.ambient_timer = 0
             self.ambient_interval = math.random(10, 20)
         end
-        
+
         -- Add to countdown (30 minutes = 1800 seconds)
         self.countdown = (self.countdown or 0) + dtime
-        
+
         -- Check and convert block below periodically
         self.infection_timer = (self.infection_timer or 0) + dtime
         if self.infection_timer >= 1 then
@@ -738,7 +738,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
             minetest.set_node(below_pos, {name = "bacterial_mod:Infected_Soil"})
             self.infection_timer = 0
         end
-        
+
 -- Check for attackable entities and spawn mobs
 		self.pod_timer = (self.pod_timer or 0) + dtime
 		if self.pod_timer >= 30 then
@@ -746,7 +746,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
 			local view_range = 25
 			local objs = minetest.get_objects_inside_radius(pos, view_range)
 			local should_summon = false
-			
+
 			for _, obj in ipairs(objs) do
 				if obj ~= self.object then
 					local entity = obj:get_luaentity()
@@ -762,16 +762,16 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
 					end
 				end
 			end
-			
+
 			if should_summon then
 				-- Summon sound + animation
 				local pos = self.object:get_pos()
 				minetest.sound_play("bacterial_mod:nexus_summon", {pos = pos, gain = 1.0, max_hear_distance = 32})
 				self.object:set_animation({x = self.animation.summon_start, y = self.animation.summon_end}, self.animation.speed_summon, 0)
 				self.summoning = true
-				
+
 				nexus_spawn_mobs_around(pos, nexus_stage_1_spawn_mobs, 2, 3)
-                
+
                 -- Schedule animation reset after summoning
                 minetest.after(2, function()
                     if self.object then
@@ -780,10 +780,10 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
                     end
                 end)
             end
-            
+
             self.pod_timer = 0
         end
-        
+
         if self.countdown >= 1800 then
             local pos = self.object:get_pos()
             self.object:remove()
@@ -834,7 +834,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
         "bacterial_mod:nexus_stage_2",
         "bacterial_mod:nexus_stage_3",
     },
-    
+
     animation = {
         stand_start = 1,
         stand_end = 140,
@@ -843,7 +843,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
         summon_end = 240,
         speed_summon = 20,
     },
-    
+
     -- Prevent despawning
     static_save = true,
     on_activate = function(self, staticdata)
@@ -856,12 +856,12 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
         -- Set initial animation
         self.object:set_animation({x = self.animation.stand_start, y = self.animation.stand_end}, self.animation.speed_normal, 0)
     end,
-    
+
     get_staticdata = function(self)
         return tostring(self.countdown)
     end,
 
-    on_step = function(self, dtime)
+    do_custom = function(self, dtime)
         -- Prevent any movement
         self.object:set_velocity({x = 0, y = 0, z = 0})
 
@@ -878,10 +878,10 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
             self.ambient_timer = 0
             self.ambient_interval = math.random(10, 20)
         end
-        
+
         -- Add to countdown (40 minutes = 2400 seconds)
         self.countdown = (self.countdown or 0) + dtime
-        
+
         -- Check and convert block below periodically
         self.infection_timer = (self.infection_timer or 0) + dtime
         if self.infection_timer >= 1 then
@@ -890,7 +890,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
             minetest.set_node(below_pos, {name = "bacterial_mod:Infected_Soil"})
             self.infection_timer = 0
         end
-        
+
 -- Check for attackable entities and spawn mobs
 		self.pod_timer = (self.pod_timer or 0) + dtime
 		if self.pod_timer >= 27 then
@@ -898,7 +898,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
 			local view_range = 35
 			local objs = minetest.get_objects_inside_radius(pos, view_range)
 			local should_summon = false
-			
+
 			for _, obj in ipairs(objs) do
 				if obj ~= self.object then
 					local entity = obj:get_luaentity()
@@ -914,16 +914,16 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
 					end
 				end
 			end
-			
+
 			if should_summon then
 				-- Summon sound + animation
 				local pos = self.object:get_pos()
 				minetest.sound_play("bacterial_mod:nexus_summon", {pos = pos, gain = 1.0, max_hear_distance = 32})
 				self.object:set_animation({x = self.animation.summon_start, y = self.animation.summon_end}, self.animation.speed_summon, 0)
 				self.summoning = true
-				
+
 				nexus_spawn_mobs_around(pos, nexus_infected_mobs, 3, 4)
-                
+
                 -- Schedule animation reset after summoning
                 minetest.after(2, function()
                     if self.object then
@@ -932,10 +932,10 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
                     end
                 end)
             end
-            
+
             self.pod_timer = 0
         end
-        
+
         if self.countdown >= 2400 then
             local pos = self.object:get_pos()
             self.object:remove()
@@ -986,7 +986,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
         "bacterial_mod:nexus_stage_2",
         "bacterial_mod:nexus_stage_3",
     },
-    
+
     animation = {
         stand_start = 0,
         stand_end = 40,
@@ -995,7 +995,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
         summon_end = 80,
         speed_summon = 20,
     },
-    
+
     -- Prevent despawning
     static_save = true,
     on_activate = function(self, staticdata)
@@ -1008,7 +1008,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
         self.object:set_animation({x = self.animation.stand_start, y = self.animation.stand_end}, self.animation.speed_normal, 0)
     end,
 
-    on_step = function(self, dtime)
+    do_custom = function(self, dtime)
         -- Prevent any movement
         self.object:set_velocity({x = 0, y = 0, z = 0})
 
@@ -1025,7 +1025,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
             self.ambient_timer = 0
             self.ambient_interval = math.random(10, 20)
         end
-        
+
         -- Check and convert block below periodically
         self.infection_timer = (self.infection_timer or 0) + dtime
         if self.infection_timer >= 1 then
@@ -1034,7 +1034,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
             minetest.set_node(below_pos, {name = "bacterial_mod:Infected_Soil"})
             self.infection_timer = 0
         end
-        
+
         -- Check for attackable entities and summon pods
         self.pod_timer = (self.pod_timer or 0) + dtime
         if self.pod_timer >= 24 then
@@ -1042,7 +1042,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
             local view_range = 50
             local objs = minetest.get_objects_inside_radius(pos, view_range)
             local should_summon = false
-            
+
             for _, obj in ipairs(objs) do
                 if obj ~= self.object then
                     local entity = obj:get_luaentity()
@@ -1058,14 +1058,14 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
                     end
                 end
             end
-            
+
             if should_summon then
                 -- Set summoning animation
                 self.object:set_animation({x = self.animation.summon_start, y = self.animation.summon_end}, self.animation.speed_summon, 0)
                 self.summoning = true
-                
+
                 nexus_spawn_mobs_around(pos, nexus_infected_mobs, 4, 5)
-                
+
                 -- Schedule animation reset after summoning
                 minetest.after(2, function()
                     if self.object then
@@ -1074,7 +1074,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
                     end
                 end)
             end
-            
+
             self.pod_timer = 0
         end
     end,
@@ -1085,5 +1085,3 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
         ep_storage:set_string("evolution_points", tostring(evolution_points))
     end,
 })
-
-
