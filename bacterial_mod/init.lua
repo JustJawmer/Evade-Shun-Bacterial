@@ -402,6 +402,28 @@ local phase_infection_settings = { -- Unused variable?
     [8] = {interval = 5, chance = 10},
 }
 
+local function bacterial_particle(pos)
+        core.add_particle({
+                pos = vector.add(pos, {x=math.random()-0.5, y=1, z=math.random()-0.5}),
+                velocity = {x=0, y=2, z=0},
+                expirationtime = 1,
+                size = 1.2,
+                texture = "Bacterial_Particle.png",
+                glow = 5,
+        })
+end
+
+minetest.register_abm({
+    label = "Bacterial particle ABM",
+    nodenames = {"bacterial_mod:Infected_Rock", "bacterial_mod:Infected_Soil"},
+    interval = 5,
+    chance = 10,
+    action = function(pos, node)
+        core.after(math.random(10), bacterial_particle, pos)
+    end
+})
+
+
 minetest.register_abm({
     minetest.log("action", "[bacterial_mod] Infection globalstep running"),
     label = "Bacterial Infection Spread",
@@ -663,34 +685,6 @@ local infected_nodes = {
     "bacterial_mod:Infected_Soil",
     "bacterial_mod:Infected_Rock",
 }
-
--- Particle effect from infected nodes
-local timer = 0
-minetest.register_globalstep(function(dtime)
-    timer = timer + dtime
-    if timer < 1 then return end
-    timer = 0
-
-    for _, player in ipairs(minetest.get_connected_players()) do
-        local pos = player:get_pos()
-        local minp = vector.subtract(pos, 32)
-        local maxp = vector.add(pos, 32)
-        local found = minetest.find_nodes_in_area(minp, maxp, infected_nodes)
-
-        for _, p in ipairs(found) do
-            if math.random(50) == 1 then
-                minetest.add_particle({
-                    pos = vector.add(p, {x=math.random()-0.5, y=1, z=math.random()-0.5}),
-                    velocity = {x=0, y=2, z=0},
-                    expirationtime = 1,
-                    size = 1.2,
-                    texture = "Bacterial_Particle.png",
-                    glow = 5,
-                })
-            end
-        end
-    end
-end)
 
 -- Run the progression of infected players
 minetest.register_globalstep(function(dtime)
