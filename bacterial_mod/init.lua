@@ -439,6 +439,7 @@ minetest.register_abm({
                         infected_block_count = infected_block_count + 1
                         evolution_points = evolution_points + 25
                         ep_storage:set_string("evolution_points", tostring(evolution_points))
+
                         check_phase_unlock()
                     end
                 end
@@ -663,6 +664,7 @@ local infected_nodes = {
     "bacterial_mod:Infected_Rock",
 }
 
+-- Particle effect from infected nodes
 local timer = 0
 minetest.register_globalstep(function(dtime)
     timer = timer + dtime
@@ -690,32 +692,32 @@ minetest.register_globalstep(function(dtime)
     end
 end)
 
-
+-- Run the progression of infected players
 minetest.register_globalstep(function(dtime)
     for name, data in pairs(infected_players) do
         data.timer = data.timer + dtime
+        if data.timer < 5 then return end
         minetest.log("action", "[bacterial_mod] Infection check running")
 
         local player = minetest.get_player_by_name(name)
-        if player then
-            local pos = vector.floor(player:get_pos())
-            local node_below = minetest.get_node_or_nil({x=pos.x, y=pos.y - 1, z=pos.z}) -- Unused variable?
-        end
 
         if data.stage == "incubation" and data.timer > 5 then
             data.stage = "symptomatic"
             minetest.chat_send_player(name, "You start coughing...")
+            data.timer = 0 -- start over for symptomatic
         elseif data.stage == "symptomatic" and data.timer > 30 then
-            local player = minetest.get_player_by_name(name)
             if player then
                 player:set_hp(0)
                 minetest.chat_send_all(name .. " succumbed to the bacterial infection.")
             end
+            data.timer = 0
+            data.stage = nil -- Clear it when he respawns
             infected_players[name] = nil
         end
     end
 end)
 
+-- Infect unprotected players who stand on infected nodes
 minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
         local name = player:get_player_name()
