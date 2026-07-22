@@ -460,6 +460,7 @@ minetest.register_abm({
                         infected_block_count = infected_block_count + 1
                         evolution_points = evolution_points + 25
                         ep_storage:set_string("evolution_points", tostring(evolution_points))
+
                         check_phase_unlock()
                     end
                 end
@@ -655,7 +656,8 @@ minetest.register_chatcommand("setphase", {
         end
 
         current_phase = phase
-        return true, "Phase set to " .. phase .. " and Evolution Points set to " .. (phases[phase] and phases[phase].threshold or 0)
+        return true, "Phase set to " .. phase .. " and Evolution Points set to "
+            .. (phases[phase] and phases[phase].threshold or 0)
     end
 })
 
@@ -684,6 +686,7 @@ local infected_nodes = {
     "bacterial_mod:Infected_Rock",
 }
 
+-- Particle effect from infected nodes
 local timer = 0
 minetest.register_globalstep(function(dtime)
     timer = timer + dtime
@@ -711,32 +714,34 @@ minetest.register_globalstep(function(dtime)
     end
 end)
 
-
+local player_infection_timer = 0
+-- Run the progression of infected players
 minetest.register_globalstep(function(dtime)
+    player_infection_timer = player_infection_timer + dtime
+    if player_infection_timer < 5 then return end
+    player_infection_timer = 0
+
     for name, data in pairs(infected_players) do
-        data.timer = data.timer + dtime
+        data.timer = data.timer + 5
         minetest.log("action", "[bacterial_mod] Infection check running")
 
         local player = minetest.get_player_by_name(name)
-        if player then
-            local pos = vector.floor(player:get_pos())
-            local node_below = minetest.get_node_or_nil({x=pos.x, y=pos.y - 1, z=pos.z}) -- Unused variable?
-        end
 
-        if data.stage == "incubation" and data.timer > 5 then
+        if data.stage == "incubation" and data.timer == 5 then
             data.stage = "symptomatic"
             minetest.chat_send_player(name, "You start coughing...")
         elseif data.stage == "symptomatic" and data.timer > 30 then
-            local player = minetest.get_player_by_name(name)
             if player then
                 player:set_hp(0)
                 minetest.chat_send_all(name .. " succumbed to the bacterial infection.")
             end
+            data.stage = nil -- Clear it when he respawns
             infected_players[name] = nil
         end
     end
 end)
 
+-- Infect unprotected players who stand on infected nodes
 minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
         local name = player:get_player_name()
@@ -850,11 +855,16 @@ end
 -- Track time for sleeping detection
 local last_time
 
+local dayskip_timer = 0
 -- Globalstep to detect sleeping (time jump to morning)
 minetest.register_globalstep(function(dtime)
+    dayskip_timer = dayskip_timer + dtime
+    if dayskip_timer < 1 then return end
+    dayskip_timer = 0
     local current_time = minetest.get_timeofday()
     if not current_time then return end
-    if last_time and last_time > 0.8 and current_time > 0.1 and current_time < 0.3 then  -- Time jumped to morning from late night, likely due to sleeping
+    if last_time and last_time > 0.8 and current_time > 0.1 and current_time < 0.3 then
+        -- Time jumped to morning from late night, likely due to sleeping
         for _, player in ipairs(minetest.get_connected_players()) do
             local phase = get_current_phase()
             local multiplier = phase == 0 and 1 or (4 * phase - 1)
