@@ -84,16 +84,15 @@ local function nexus_spawn_mobs_around(pos, name_list, min_count, max_count)
 			y = pos.y + 1,
 			z = pos.z + math.sin(angle) * distance,
 		}
-
-                local mobname = nexus_random_spawn(nexus_stage_1_spawn_mobs)
-                local obj = minetest.add_entity(new_pos, mobname)
-                if obj then
-                    local ent = obj:get_luaentity()
-                    if ent then
-                        ent.spawn_reason = "nexus"
-                    end
-                end
-        end
+		local mobname = nexus_random_spawn(name_list)
+		local obj = minetest.add_entity(new_pos, mobname)
+		if obj then
+			local ent = obj:get_luaentity()
+			if ent then
+				ent.spawn_reason = "nexus"
+			end
+		end
+	end
 end
 
 
@@ -114,7 +113,7 @@ mobs:register_mob("bacterial_mod:bacteria_blob", {
     visual = "mesh",
     mesh = "Bacterial_Mound.b3d",
     textures = {
-        {"Bacterial_Mound_Texture.png"},
+        {"blob_texture.png"},
     },
         attack_ignore = {
         "bacterial_mod:bacteria_blob",
@@ -129,6 +128,12 @@ mobs:register_mob("bacterial_mod:bacteria_blob", {
     walk_velocity = 1,
     run_velocity = 2,
     jump = true,
+    sounds = {
+        distance = 7,
+        random = "flesh_hit",
+        death = "wet1",
+        damage = "wet1",
+    },
     drops = {
         {name = "bacterial_mod:Flesh", chance = 1, min = 1, max = 2},
     },
@@ -139,19 +144,8 @@ mobs:register_mob("bacterial_mod:bacteria_blob", {
         -- Allow spawning in any phase for testing purposes
         return true
     end,
-    animation = {
-        speed_normal = 15,
-        speed_run = 25,
-        stand_start = 0,
-        stand_end = 79,
-        walk_start = 168,
-        walk_end = 187,
-        run_start = 168,
-        run_end = 187,
-        punch_start = 189,
-        punch_end = 198,
-    },
-    do_custom = function(self, dtime)
+
+    on_step = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -236,7 +230,7 @@ mobs:register_mob("bacterial_mod:infected_cow", {
         die_start = 148,
         die_end = 170,
     },
-    do_custom = function(self, dtime)
+    on_step = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -294,15 +288,15 @@ mobs:register_mob("bacterial_mod:flesh_amalgamation", {
     attack_players = true,
     damage = 5,
     reach = 2.2,
-    hp_max = 15,
+    hp_max = 20,
     armor = 100,
     view_range = 25,
     collisionbox = {-0.35, -0.01, -0.35, 0.35, 1.0, 0.35},
     visual_size = {x = 1.2, y = 1.2},
     visual = "mesh",
-    mesh = "Bacterial_Mound.b3d",  -- Reuse existing mesh or create specialized model
-    textures = {
-        {"Flesh_Amalgamation.png"},  -- You'll need to create this texture
+    mesh = "Large_Flesh.b3d",  -- Reuse existing mesh or create specialized model
+    textures = { 
+        {"Small_Flesh_Texture.png"},
     },
         attack_ignore = {
         "bacterial_mod:bacteria_blob",
@@ -314,29 +308,53 @@ mobs:register_mob("bacterial_mod:flesh_amalgamation", {
         "bacterial_mod:infected_human",
     },
     makes_footstep_sound = true,
-    walk_velocity = 1.5,
-    run_velocity = 3,
-    jump = true,
-    drops = {
-        {name = "bacterial_mod:Flesh", chance = 1, min = 2, max = 3},
+    sounds = {
+        distance = 7,
+        random = "flesh_hit",
+        death = "wet1",
+        damage = "wet1",
     },
-    lava_damage = 4,
+
+    walk_velocity = 2,
+    run_velocity = 5,
+    jump = true,
+    jump_height = 15,
+    can_leap = true,
+    fall_damage = false,
+
+    lava_damage = 8,
     light_damage = 0,
-    fear_height = 3,
+    fear_height = 15,
     on_spawn = function(self, pos)
-        -- Allow spawning in any phase for testing purposes
+        -- Allow Nexus spawns
+        if self.spawn_reason == "nexus" then
+            return true
+        end
+
+    -- No phase logic here
         return true
     end,
+    
     animation = {
-        speed_normal = 15,
-        speed_run = 20,
         stand_start = 0,
-        stand_end = 79,
-        walk_start = 168,
-        walk_end = 187,
-        run_start = 168,
-        run_end = 187,
+        stand_end = 100,
+        walk_start = 101,
+        walk_end = 140,
+        walk_speed = 17.5,
+        run_start = 141,
+        run_end = 155,
+        run_speed = 25,
+        jump_start = 156,
+        jump_end = 170,
     },
+    on_step = function(self, dtime)
+        self.mold_timer = (self.mold_timer or 0) + dtime
+        if self.mold_timer >= 30 then
+            local pos = self.object:get_pos()
+            spawn_mold_around(pos, 1)
+            self.mold_timer = 0
+        end
+    end,
     on_die = function(self, pos)
         local evolution_points = tonumber(ep_storage:get_string("evolution_points")) or 0
         evolution_points = evolution_points - 1
@@ -344,6 +362,7 @@ mobs:register_mob("bacterial_mod:flesh_amalgamation", {
         ep_storage:set_string("evolution_points", tostring(evolution_points))
     end,
 })
+
 
 -- ============================================================================
 -- SMALL FLESH AMALGAMATION MOB
@@ -418,7 +437,7 @@ mobs:register_mob("bacterial_mod:small_flesh_amalgamation", {
         jump_start = 156,
         jump_end = 170,
     },
-    do_custom = function(self, dtime)
+    on_step = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -503,7 +522,7 @@ mobs:register_mob("bacterial_mod:infected_sheep", {
         run_end = 280,
         run_speed = 75,
     },
-    do_custom = function(self, dtime)
+    on_step = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -607,7 +626,7 @@ mobs:register_mob("bacterial_mod:infected_pig", {
         die_start = 178,
         die_end = 205,
     },
-    do_custom = function(self, dtime)
+    on_step = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -716,7 +735,7 @@ mobs:register_mob("bacterial_mod:infected_human", {
         run_end = 275,
         run_speed = 75,
     },
-    do_custom = function(self, dtime)
+    on_step = function(self, dtime)
         self.mold_timer = (self.mold_timer or 0) + dtime
         if self.mold_timer >= 30 then
             local pos = self.object:get_pos()
@@ -829,6 +848,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
         "bacterial_mod:nexus_stage_3",
     },
 
+    
     animation = {
         stand_start = 1,
         stand_end = 80,
@@ -837,7 +857,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_1", {
         summon_end = 190,
         speed_summon = 20,
     },
-
+    
     -- Prevent despawning
     static_save = true,
     on_activate = function(self, staticdata)
@@ -874,7 +894,7 @@ end,
         return tostring(self.countdown)
     end,
 
-    do_custom = function(self, dtime)
+    on_step = function(self, dtime)
         nexus_apply_gravity_step(self, dtime)
 
         nexus_regenerate(self, dtime, 5 / 60)
@@ -887,7 +907,7 @@ end,
             self.ambient_timer = 0
             self.ambient_interval = math.random(10, 20)
         end
-
+        
         -- Add to countdown (30 minutes = 1800 seconds)
         self.countdown = (self.countdown or 0) + dtime
         
@@ -902,7 +922,7 @@ end,
             end
             self.infection_timer = 0
         end
-
+        
 -- Check for attackable entities and spawn mobs
 		self.pod_timer = (self.pod_timer or 0) + dtime
 		if self.pod_timer >= 30 then
@@ -910,7 +930,7 @@ end,
 			local view_range = 25
 			local objs = minetest.get_objects_inside_radius(pos, view_range)
 			local should_summon = false
-
+			
 			for _, obj in ipairs(objs) do
 				if obj ~= self.object then
 					local entity = obj:get_luaentity()
@@ -926,16 +946,16 @@ end,
 					end
 				end
 			end
-
+			
 			if should_summon then
 				-- Summon sound + animation
 				local pos = self.object:get_pos()
 				minetest.sound_play("bacterial_mod:nexus_summon", {pos = pos, gain = 1.0, max_hear_distance = 32})
 				self.object:set_animation({x = self.animation.summon_start, y = self.animation.summon_end}, self.animation.speed_summon, 0)
 				self.summoning = true
-
+				
 				nexus_spawn_mobs_around(pos, nexus_stage_1_spawn_mobs, 2, 3)
-
+                
                 -- Schedule animation reset after summoning
                 minetest.after(2, function()
                     if self.object then
@@ -944,10 +964,10 @@ end,
                     end
                 end)
             end
-
+            
             self.pod_timer = 0
         end
-
+        
         if self.countdown >= 1800 then
             local pos = self.object:get_pos()
             self.object:remove()
@@ -998,7 +1018,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
         "bacterial_mod:nexus_stage_2",
         "bacterial_mod:nexus_stage_3",
     },
-
+    
     animation = {
         stand_start = 1,
         stand_end = 140,
@@ -1007,7 +1027,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_2", {
         summon_end = 240,
         speed_summon = 20,
     },
-
+    
     -- Prevent despawning
     static_save = true,
     on_activate = function(self, staticdata)
@@ -1044,7 +1064,7 @@ end,
         return tostring(self.countdown)
     end,
 
-    do_custom = function(self, dtime)
+    on_step = function(self, dtime)
         nexus_apply_gravity_step(self, dtime)
 
         nexus_regenerate(self, dtime, 15 / 60)
@@ -1057,7 +1077,7 @@ end,
             self.ambient_timer = 0
             self.ambient_interval = math.random(10, 20)
         end
-
+        
         -- Add to countdown (40 minutes = 2400 seconds)
         self.countdown = (self.countdown or 0) + dtime
         
@@ -1072,7 +1092,7 @@ end,
             end
             self.infection_timer = 0
         end
-
+        
 -- Check for attackable entities and spawn mobs
 		self.pod_timer = (self.pod_timer or 0) + dtime
 		if self.pod_timer >= 27 then
@@ -1080,7 +1100,7 @@ end,
 			local view_range = 35
 			local objs = minetest.get_objects_inside_radius(pos, view_range)
 			local should_summon = false
-
+			
 			for _, obj in ipairs(objs) do
 				if obj ~= self.object then
 					local entity = obj:get_luaentity()
@@ -1096,16 +1116,16 @@ end,
 					end
 				end
 			end
-
+			
 			if should_summon then
 				-- Summon sound + animation
 				local pos = self.object:get_pos()
 				minetest.sound_play("bacterial_mod:nexus_summon", {pos = pos, gain = 1.0, max_hear_distance = 32})
 				self.object:set_animation({x = self.animation.summon_start, y = self.animation.summon_end}, self.animation.speed_summon, 0)
 				self.summoning = true
-
+				
 				nexus_spawn_mobs_around(pos, nexus_infected_mobs, 3, 4)
-
+                
                 -- Schedule animation reset after summoning
                 minetest.after(2, function()
                     if self.object then
@@ -1114,10 +1134,10 @@ end,
                     end
                 end)
             end
-
+            
             self.pod_timer = 0
         end
-
+        
         if self.countdown >= 2400 then
             local pos = self.object:get_pos()
             self.object:remove()
@@ -1168,7 +1188,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
         "bacterial_mod:nexus_stage_2",
         "bacterial_mod:nexus_stage_3",
     },
-
+    
     animation = {
         stand_start = 0,
         stand_end = 40,
@@ -1177,7 +1197,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
         summon_end = 80,
         speed_summon = 20,
     },
-
+    
     -- Prevent despawning
     static_save = true,
     on_activate = function(self, staticdata)
@@ -1202,7 +1222,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
         nexus_apply_damage_reduction(self, damage)
     end,
 
-    do_custom = function(self, dtime)
+    on_step = function(self, dtime)
         nexus_apply_gravity_step(self, dtime)
 
         nexus_regenerate(self, dtime, 35 / 60)
@@ -1227,7 +1247,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
             end
             self.infection_timer = 0
         end
-
+        
         -- Check for attackable entities and summon pods
         self.pod_timer = (self.pod_timer or 0) + dtime
         if self.pod_timer >= 24 then
@@ -1235,7 +1255,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
             local view_range = 50
             local objs = minetest.get_objects_inside_radius(pos, view_range)
             local should_summon = false
-
+            
             for _, obj in ipairs(objs) do
                 if obj ~= self.object then
                     local entity = obj:get_luaentity()
@@ -1251,14 +1271,14 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
                     end
                 end
             end
-
+            
             if should_summon then
                 -- Set summoning animation
                 self.object:set_animation({x = self.animation.summon_start, y = self.animation.summon_end}, self.animation.speed_summon, 0)
                 self.summoning = true
-
+                
                 nexus_spawn_mobs_around(pos, nexus_infected_mobs, 4, 5)
-
+                
                 -- Schedule animation reset after summoning
                 minetest.after(2, function()
                     if self.object then
@@ -1267,7 +1287,7 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
                     end
                 end)
             end
-
+            
             self.pod_timer = 0
         end
     end,
@@ -1278,3 +1298,5 @@ minetest.register_entity("bacterial_mod:nexus_stage_3", {
         ep_storage:set_string("evolution_points", tostring(evolution_points))
     end,
 })
+
+

@@ -1,15 +1,6 @@
 local ep_storage = minetest.get_mod_storage()
 
 
-minetest.register_craft({
-    output = "bacterial_mod:flask_sanitizer",
-    recipe = {
-        {"bacterial_mod:flesh", "vessels:glass_bottle", "bacterial_mod:antibiotics"},
-        {"", "default:steel_ingot", ""},
-    }
-})
-
-
 
 minetest.register_craftitem("bacterial_mod:spawn_blob", {
     description = "Bacterial Blob Spawn Egg",
