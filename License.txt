@@ -24,3 +24,6 @@ Sounds by jawmer/JustJawmer
 CC BY (Attribution)
 
 You can use, adapt, remix, and use the sounds commercially. You must give proper credit to the original artist.
+
+Official license: https://creativecommons.org/licenses/by/4.0/
+                  https://creativecommons.org/licenses/by-nc-nd/4.0/
