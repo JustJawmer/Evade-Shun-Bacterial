@@ -1,26 +1,26 @@
 Licenses
 
-Code by jawmer/JustJawmer
+Code by jawmer/JustJawmer  
+CC BY (Attribution)
 
-CC BY-NC (Attribution-NonCommercial)
-- You can use, adapt and remix, but only for non-commercial purposes. You must give the artist credit.
+You can use, adapt, remix, and use the code commercially. You must give proper credit to the original author.
 
-Music by Sagittarixie
+Music by Sagittarixie  
+CC BY-NC-ND (Attribution‑NonCommercial‑NoDerivatives)
 
-CC BY-NC-ND (Attribution-NonCommercial-NoDerivatives)
-- You can download and share the music, but you cannot change it or use it commercially. Credit to the original artist is required. Credit MAINLY Sagittarixie, they are god sent, but also credit the mod
+You can download and share the music, but you cannot change it or use it commercially. Credit to the original artist is required. Credit MAINLY Sagittarixie, they are god sent, but also credit the mod.
 
-Textures & Art by jawmer/JustJawmer
+Textures & Art by jawmer/JustJawmer  
+CC BY (Attribution)
 
-CC BY-NC (Attribution-NonCommercial)
-- You can use, adapt and remix, but only for non-commercial purposes. You must give the artist credit.
+You can use, adapt, remix, and use the artwork commercially. You must give proper credit to the original artist.
 
-Models by jawmer/JustJawmer
+Models by jawmer/JustJawmer  
+CC BY (Attribution)
 
-CC BY-NC (Attribution-NonCommercial)
-- You can use, adapt and remix, but only for non-commercial purposes. You must give the artist credit.
+You can use, adapt, remix, and use the models commercially. You must give proper credit to the original artist.
 
-Sounds by jawmer/JustJawmer
+Sounds by jawmer/JustJawmer  
+CC BY (Attribution)
 
-CC BY-NC (Attribution-NonCommercial)
-- You can use, adapt and remix, but only for non-commercial purposes. You must give the artist credit.
+You can use, adapt, remix, and use the sounds commercially. You must give proper credit to the original artist.
