@@ -1,5 +1,1 @@
-Update:
-
-it's all in the message on Luanti Forums
-
-I think this is almost done!
+I'll change this to talk about the mod, when I finish the last model today, then, all that remains is the point getting for lower phases.
