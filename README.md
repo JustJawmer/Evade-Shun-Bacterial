@@ -15,3 +15,6 @@ This mod comes with, but is not limited to: Horrors beyond comprehension! Monste
 Hope you know how to learn, because this mod doesn't serve anything on a silver platter!
 
 Good luck out there! Try to stay in one piece!
+
+
+-Quick note: this mod is still in beta. Expect MANY updates to come!
