@@ -233,7 +233,7 @@ minetest.register_craftitem("bacterial_mod:spawn_nexus_stage_3", {
             local pos = pointed_thing.above
             local ent = minetest.add_entity(pos, "bacterial_mod:nexus_stage_3")
             if ent then
-                minetest.log("action", string.format("[bacterial_mod] spawn_nexus_stage_3: created bacterial_mod:nexus_stage_3 at %s", minetest.pos_to_string(pos)))
+                minetest.log("action", string.format("[bacterial_mod] spawn_nexus_stage_2: created bacterial_mod:nexus_stage_2 at %s", minetest.pos_to_string(pos)))
             end
             itemstack:take_item()
             return itemstack
