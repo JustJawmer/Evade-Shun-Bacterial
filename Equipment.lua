@@ -226,12 +226,12 @@ minetest.register_craftitem("bacterial_mod:spawn_nexus_stage_2", {
 -- NEXUS STAGE 3 SPAWN EGG
 -- ============================================================================
 minetest.register_craftitem("bacterial_mod:spawn_nexus_stage_3", {
-    description = "Nexus Stage 3 Spawn Egg",
+    description = "Nexus Stage 3 Spawn Egg (Placeholder)",
     inventory_image = "NexusStage3Spawn.png",
     on_use = function(itemstack, user, pointed_thing)
         if pointed_thing and pointed_thing.type == "node" then
             local pos = pointed_thing.above
-            local ent = minetest.add_entity(pos, "bacterial_mod:nexus_stage_3")
+            local ent = minetest.add_entity(pos, "bacterial_mod:nexus_stage_2")
             if ent then
                 minetest.log("action", string.format("[bacterial_mod] spawn_nexus_stage_2: created bacterial_mod:nexus_stage_2 at %s", minetest.pos_to_string(pos)))
             end

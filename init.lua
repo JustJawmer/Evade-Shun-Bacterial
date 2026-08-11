@@ -304,27 +304,7 @@ local function init_hazmat_inventory(player)
 end
 
 
-sfinv.register_page("bacterial_mod:hazmat", {
-    title = "Hazmat",
-    get = function(self, player, context)
-        local name = player:get_player_name()
-        local inv = minetest.get_inventory({type="detached", name="hazmat_" .. name})
-        if not inv then
-            init_hazmat_inventory(player)
-        end
-        return sfinv.make_formspec(
-            player, context,
-            "size[8,7]" ..
-            "label[0.2,0.2;Hazmat Gear]" ..
-            "label[0.2,0.7;Suit:]" ..
-            "list[detached:hazmat_" .. name .. ";main;1.3,0.5;1,1;]" ..
-            "list[current_player;main;0,3;8,4;]" ..
-            "listring[detached:hazmat_" .. name .. ";main]" ..
-            "listring[current_player;main]",
-            false
-        )
-    end,
-})
+
 
 minetest.register_on_joinplayer(init_hazmat_inventory)
 
@@ -924,7 +904,7 @@ minetest.register_globalstep(function(dtime)
         for _, player in ipairs(minetest.get_connected_players()) do
             local phase = get_current_phase()
             local multiplier = phase == 0 and 1 or (4 * phase - 1)
-            local points = 20 * multiplier
+            local points = 25 * multiplier
             local evolution_points = tonumber(ep_storage:get_string("evolution_points")) or 0
             evolution_points = evolution_points + points
             ep_storage:set_string("evolution_points", tostring(evolution_points))
