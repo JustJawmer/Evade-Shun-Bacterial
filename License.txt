@@ -1,14 +1,14 @@
 Licenses
 
 Code by jawmer/JustJawmer  
-CC BY (Attribution)
+MIT (Attribution)
 
 You can use, adapt, remix, and use the code commercially. You must give proper credit to the original author.
 
 Music by Sagittarixie  
-CC BY-NC-ND (Attribution‑NonCommercial‑NoDerivatives)
+CC BY
 
-You can download and share the music, but you cannot change it or use it commercially. Credit to the original artist is required. Credit MAINLY Sagittarixie, they are god sent, but also credit the mod.
+You can use, adapt, remix, and use the sounds commercially. You must give proper credit to the original artist. Credit MAINLY Sagittarixie, they are god sent, but also credit the mod.
 
 Textures & Art by jawmer/JustJawmer  
 CC BY (Attribution)
@@ -25,5 +25,12 @@ CC BY (Attribution)
 
 You can use, adapt, remix, and use the sounds commercially. You must give proper credit to the original artist.
 
-Official licenses: https://creativecommons.org/licenses/by/4.0/
-                  https://creativecommons.org/licenses/by-nc-nd/4.0/
+Official licenses: https://opensource.org/license/mit
+                   https://creativecommons.org/licenses/by/4.0/
+
+Original Sound Effects: https://pixabay.com/cs/users/dragon-studio-38165424/ -Quick note, this guy is awesome!
+               Pixabay: https://pixabay.com/service/license-summary/
+
+As by Pixabay License, I can use these sound effects, if I changed them. I did change the pitch on all of them and the velocity. I belive this is enough.
+
+Me Made Sound Effects: Sheep and Cow sound effects were made by me (aka recorded).
