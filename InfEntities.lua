@@ -160,7 +160,7 @@ mobs:register_mob("bacterial_mod:bacteria_blob", {
     reach = 2.5,
     hp_max = 8,
     armor = 100,
-    view_range = 25,
+    view_range = 50,
     collisionbox = {-0.1, 0, -0.1, 0.5, 0.8, 0.5},
     visual_size = {x = 3, y = 3},
     visual = "mesh",
