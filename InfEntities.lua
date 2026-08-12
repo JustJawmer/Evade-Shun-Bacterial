@@ -183,9 +183,9 @@ mobs:register_mob("bacterial_mod:bacteria_blob", {
     jump = true,
     sounds = {
         distance = 7,
-        random = "flesh_hit",
-        death = "wet1",
-        damage = "wet1",
+        random = "bone_flesh_move",
+        death = "flesh_hit",
+        damage = "flesh_hit",
     },
     drops = {
         {name = "bacterial_mod:Flesh", chance = 1, min = 1, max = 2},
@@ -329,7 +329,7 @@ mobs:register_mob("bacterial_mod:infected_cow", {
             attempt_spawn_stage_1_nexus(pos)
         else
             -- Explosion death: spawn 3x3 mold area after 3 seconds
-            minetest.sound_play("Explosions", {pos = pos, gain = 1.0, max_hear_distance = 32})
+            minetest.sound_play("Explosion", {pos = pos, gain = 1.0, max_hear_distance = 32})
             minetest.after(0.1, function()
                 -- Spawn 3x3 area of mold, only replacing air
                 for x = -2, 2 do
@@ -390,8 +390,8 @@ mobs:register_mob("bacterial_mod:flesh_amalgamation", {
     sounds = {
         distance = 7,
         random = "flesh_hit",
-        death = "wet1",
-        damage = "wet1",
+        death = "flesh_hit",
+        damage = "flesh_hit",
     },
 
     walk_velocity = 2,
@@ -507,8 +507,8 @@ mobs:register_mob("bacterial_mod:small_flesh_amalgamation", {
     sounds = {
         distance = 7,
         random = "flesh_hit",
-        death = "wet1",
-        damage = "wet1",
+        death = "flesh_hit",
+        damage = "flesh_hit",
     },
 
     walk_velocity = 4,
@@ -731,6 +731,12 @@ mobs:register_mob("bacterial_mod:infected_pig", {
         "bacterial_mod:infected_human",
     },
     makes_footstep_sound = true,
+    sounds = {
+        distance = 10,
+        random = "pig1",
+        damage = "pig2",
+    },
+
     walk_velocity = 3,
     run_velocity = 6,
     jump = true,
@@ -776,7 +782,7 @@ mobs:register_mob("bacterial_mod:infected_pig", {
             -- Normal death
         else
             -- Explosion death: spawn 3x3 mold area after 3 seconds
-            minetest.sound_play("Explosions", {pos = pos, gain = 1.0, max_hear_distance = 32})
+            minetest.sound_play("Explosion", {pos = pos, gain = 1.0, max_hear_distance = 32})
             minetest.after(0.1, function()
                 -- Spawn 3x3 area of mold, only replacing air
                 for x = -1, 1 do
