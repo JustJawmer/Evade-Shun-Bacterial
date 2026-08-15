@@ -1,0 +1,62 @@
+Licenses
+
+Code by jawmer/JustJawmer  
+MIT
+
+You can use, adapt, remix, and use the code commercially. You must give proper credit to the original author.
+
+Music by Sagittarixie  
+CC BY 4.0
+		ambDEMO
+		beingWatched
+		failedSubject
+
+Sagittarixie's Youtube Channel: https://www.youtube.com/@Sagittarixie
+
+You can use, adapt, remix, and use the sounds commercially. You must give proper credit to the original artist. Credit MAINLY Sagittarixie, they are god sent, but also credit the mod.
+
+Textures & Art by jawmer/JustJawmer  
+CC BY 4.0
+
+You can use, adapt, remix, and use the artwork commercially. You must give proper credit to the original artist.
+
+Models by jawmer/JustJawmer  
+CC BY 4.0
+
+You can use, adapt, remix, and use the models commercially. You must give proper credit to the original artist.
+
+Sounds by jawmer/JustJawmer  
+CC BY 4.0
+		sheep1
+		sheep2
+		cow1
+		cow2
+		bell1
+		bell2
+		bell3
+		Phase_2
+		Phase_6
+
+You can use, adapt, remix, and use the sounds commercially. You must give proper credit to the original artist.
+
+Official licenses: https://opensource.org/license/mit
+                   https://creativecommons.org/licenses/by/4.0/
+
+Original Sound Effects: Pig SFX by yottasounds -- https://freesound.org/s/176731/ -- OG License: Attribution 3.0
+			Growls by lendrick -- https://freesound.org/s/77635/ -- OG License: Creative Commons 0
+			       by Vaporpup -- https://freesound.org/s/571386/ -- OG License: Creative Commons 0
+			Human Sounds by CrocyTC -- https://freesound.org/s/353063/ -- OG License: Creative Commons 0
+				     by gneube -- https://freesound.org/s/315847/ -- OG License: Attribution 4.0
+			Phase_2 by CVLTIV8R -- https://freesound.org/s/865975/ -- OG License: Creative Commons 0
+			Phase_3 by CVLTIV8R -- https://freesound.org/s/857752/ -- OG License: Creative Commons 0
+			Phase_4 by DylanTheFish -- https://freesound.org/s/449820/ -- OG License: Creative Commons 0
+			Phase_5 by CVLTIV8R -- https://freesound.org/s/851238/ -- OG License: Creative Commons 0
+			Phase_7 by CVLTIV8R -- https://freesound.org/s/847651/ -- OG License: Creative Commons 0
+			Phase_8 by wluna -- https://freesound.org/s/216046/ -- OG License: Creative Commons 0
+			Nexus Ambience by Seth_Makes_Sounds -- https://freesound.org/s/850306/ -- OG License: Creative Commons 0
+			Flesh Sounds by JustInvoke -- https://freesound.org/s/138481/ -- OG Licenses: Creative Commons 0 & Attribution 4.0
+			Explosion by magnuswaker -- https://freesound.org/s/581092/ -- OG License: Creative Commons 0
+			pig1 by qubodup -- https://freesound.org/s/442904/ -- License: Creative Commons 0
+			pig2 by egomassive -- https://freesound.org/s/536746/ -- License: Creative Commons 0
+
+Me Made Sound Effects: Sheep and Cow sound effects were made by me (aka recorded).
