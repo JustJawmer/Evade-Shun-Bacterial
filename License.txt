@@ -54,7 +54,9 @@ Original Sound Effects: Pig SFX by yottasounds -- https://freesound.org/s/176731
 			Phase_7 by CVLTIV8R -- https://freesound.org/s/847651/ -- OG License: Creative Commons 0
 			Phase_8 by wluna -- https://freesound.org/s/216046/ -- OG License: Creative Commons 0
 			Nexus Ambience by Seth_Makes_Sounds -- https://freesound.org/s/850306/ -- OG License: Creative Commons 0
-			Flesh Sounds by JustInvoke -- https://freesound.org/s/138481/ -- OG Licenses: Creative Commons 0 & Attribution 4.0
+			flesh_hit by JustInvoke -- https://freesound.org/s/138481/ -- OG License: Creative Commons 0
+			Flesh_Explosion by JustInvoke -- https://freesound.org/s/446115/ -- OG License: Attribution 4.0
+			bone_flesh_move by JustInvoke -- https://freesound.org/s/446116/ -- License: Attribution 4.0
 			Explosion by magnuswaker -- https://freesound.org/s/581092/ -- OG License: Creative Commons 0
 			pig1 by qubodup -- https://freesound.org/s/442904/ -- License: Creative Commons 0
 			pig2 by egomassive -- https://freesound.org/s/536746/ -- License: Creative Commons 0
