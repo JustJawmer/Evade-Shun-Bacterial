@@ -7,9 +7,9 @@ You can use, adapt, remix, and use the code commercially. You must give proper c
 
 Music by Sagittarixie  
 CC BY 4.0
-		ambDEMO
-		beingWatched
-		failedSubject
+		ambDEMO https://www.youtube.com/watch?v=EVEy0fhZw5s
+		beingWatched https://www.youtube.com/watch?v=qExLm6ez52I
+		failedSubject https://www.youtube.com/watch?v=M0Kw3U94ccs
 
 Sagittarixie's Youtube Channel: https://www.youtube.com/@Sagittarixie
 
