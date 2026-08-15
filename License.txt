@@ -42,7 +42,7 @@ You can use, adapt, remix, and use the sounds commercially. You must give proper
 Official licenses: https://opensource.org/license/mit
                    https://creativecommons.org/licenses/by/4.0/
 
-Original Sound Effects: Pig SFX by yottasounds -- https://freesound.org/s/176731/ -- OG License: Attribution 3.0
+Original Sound Effects:
 			Growls by lendrick -- https://freesound.org/s/77635/ -- OG License: Creative Commons 0
 			       by Vaporpup -- https://freesound.org/s/571386/ -- OG License: Creative Commons 0
 			Human Sounds by CrocyTC -- https://freesound.org/s/353063/ -- OG License: Creative Commons 0
